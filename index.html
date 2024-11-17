@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String</title>
+
+    <link href="./style.css" rel="stylesheet">
+    <link href="./images/icon.png" rel="icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body class="roboto-condensed">
+<div class="home-p" id="home-p">
+<div class="hp-txt" id="hp-txt">
+
+    <div>
+        <img src="./images/icon.png">
+        <p class="h1">STRING</p>
+    </div>
+
+    <p class="hp-txt-d">Tie Your Days Together, Memory by Memory.</p>
+    
+</div>
+
+<div class="h-lf-par" id="h-lf-par">
+<div class="lf-ip">
+    <input type="email" id="lf-email" placeholder="Email Address or String ID">
+<div class="lf-psw-t">
+    <input type="password" id="lf-psw" placeholder="Password" >
+    <span id="togglePassword" class="toggle-password">Show</span>
+</div></div>
+<button id="lg-button" class="lg-button">Attach</button>
+<div class="lf-line"></div>
+<button id="rg-button" class="rg-button">Create String</button> 
+</div>
+<div>
+    <input type="file" id="file" id="choose" accept="image/*">
+    <button id="upload">Upload</button>
+    <img height="100px" width="100px" id="image">
+</div>
+</div>
+<script src="./script.js" type="module" ></script>    
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
+</body>
+</html>

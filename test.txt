@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Firebase Image Upload using HTML and JavaScript</title>
+   <style>
+      #photo{
+         margin-top: 200px;
+         margin-left: 450px;
+      }
+      #upload{
+         margin-top: 20px;
+         margin-left: 450px;
+      }
+   </style>
+</head>
+<body>
+   <input type="file" id="photo" /></br>
+   <button id="upload" onclick="uploadImage()">Upload Image</button>
+</body>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
+<script>
+
+   //paste here your copied configuration code
+   const firebaseConfig = {
+      apiKey: "***",
+      authDomain: "**",
+      projectId: "**",
+      storageBucket: "**",
+      messagingSenderId: "**",
+      appId: "**",
+      measurementId: "**"
+   };
+
+   // Initialize Firebase
+   firebase.initializeApp(firebaseConfig);
+   console.log(firebase);
+   function uploadImage() {
+      const ref = firebase.storage().ref();
+      const file = document.querySelector("#photo").files[0];
+      const name = +new Date() + "-" + file.name;
+      const metadata = {
+         contentType: file.type
+      };
+      const task = ref.child(name).put(file, metadata);task
+      .then(snapshot => snapshot.ref.getDownloadURL())
+      .then(url => {
+      console.log(url);
+      alert('image uploaded successfully');
+      document.querySelector("#image").src = url;
+   })
+   .catch(console.error);
+   }
+   const errorMsgElement = document.querySelector('span#errorMsg');
+-----------------------------------------------------------------------------------------------------
+
+
+
+    
+var no=0;
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyA_-SNMVZQVQM-eDK3aY_kGYg2hFigWTfo",
+      authDomain: "web-test-1-d3b35.firebaseapp.com",
+      databaseURL: "https://web-test-1-d3b35-default-rtdb.firebaseio.com",
+      projectId: "web-test-1-d3b35",
+      storageBucket: "web-test-1-d3b35.appspot.com",
+      messagingSenderId: "1006418965402",
+      appId: "1:1006418965402:web:2f8b1801b2cf7935c1c023",
+      measurementId: "G-DD9YCHZ247"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getDatabase(app);
+
+    // Write data
+ 
+function registerpg(){
+    document.getElementById('box').innerHTML=``;
+    document.getElementById('box').innerHTML=`
+     <div>
+        <label for="fname">First Name</label>
+        <input id="fname" type="text">
+        </div>
+  
+        <div>
+        <label for="lname">Last Name</label>
+        <input id="lname" type="text">
+        </div>
+
+        <div>
+        <label for="uname">User Name</label>
+        <input id="uname" type="text" value="">
+        </div>  
+        <div>
+        <label for="psw">Password</label>
+        <input id="psw" type="password" >
+        </div>  
+  
+        <div>
+        <label for="age">Age</label>
+        <input id="age" type="number">
+        </div>
+
+        <div>
+        <label for="email">Email</label>
+        <input id="email" type="email">
+        </div>
+
+       <div class="div">
+<button id='regi' >Register</button>
+       </div>
+    </div>
+    `;
+
+    
+    document.getElementById('email').addEventListener('keyup',checkmail );
+    document.getElementById('regi').addEventListener('click', regis);
+}
+
+function removepg(){
+    document.getElementById('box').innerHTML=`
+    
+        <div>
+        <label for="uname">User Name</label>
+        <input id="uname" type="text" value="">
+        </div>  
+  
+        <div>
+        <label for="psw">Password</label>
+        <input id="psw" type="password">
+        </div>
+
+       
+       <div class="div">
+<button id='rmv' >Remove</button>
+       </div>
+    </div>
+    `;
+    document.getElementById('rmv').addEventListener('click', rmv);
+}
+
+
+
+    function regis() {
+        checkmail();
+        var fname=document.getElementById('fname');
+var lname=document.getElementById('lname');
+var age=document.getElementById('age');
+var email=document.getElementById('email');
+var uname=document.getElementById('uname');
+var psw=document.getElementById('psw');
+if(lname.value==''||fname.value==''||age.value==''||email.value==''||psw.value==''){
+    alert("Input Fields Can't Be Empty");
+ 
+   return 0;
+}
+
+if(uname.value.trim()==''){
+    uname.value=fname.value+lname.value;
+}
+      set(ref(db, 'users/'+uname.value  ), {
+        FirstName:fname.value,
+        LastName:lname.value,
+        UserName:uname.value,
+        Age:age.value,
+        Password:psw.value,
+        Email: email.value
+      }).then(() => {
+        psw.value=uname.value=fname.value=lname.value=age.value=email.value='';
+        console.log('Data written successfully!');
+        alert('Data written successfully!');
+      }).catch((error) => {
+        console.error('Error writing data:', error);
+      });
+    setTimeout(() => {
+        location.reload();
+    }, 2000);
+no=no+1;
+    set(ref(db, 'Emails/'+no),email.value).catch((error) => {
+      console.error('Error storing email data:', error);
+    });
+    }
+
+
+    function rmv() {
+        var uname=document.getElementById('uname');
+var psw=document.getElementById('psw');
+
+        get(ref(db, 'users/'+uname.value)).then((snapshot) => {
+ if(snapshot.exists()){
+   if(psw.value==snapshot.val().Password){
+    remove(ref(db, 'users/'+uname.value)).then(() => {
+               alert('Data removed successfully!');
+               psw.value=uname.value='';
+               setTimeout(() => {
+                location.reload();
+            }, 1100);
+             }).catch((error) => {
+               console.error('Error writing data:', error);
+             });
+   }
+   else{
+    alert("Wrong Password !");
+    psw.value='';
+    psw.style.backgroundColor='red';
+   }
+ }
+ else{
+    alert("No User Found !");
+    uname.value='';
+    psw.value='';
+ }
+      }).catch((error) => {
+        console.error('Error writing data:', error);
+      });
+    
+    }
+function findpg(){
+    document.getElementById('box').innerHTML=`
+    
+    <div>
+    <label for="uname">User Name</label>
+    <input id="uname" type="text" value="">
+    </div>  
+
+    <div>
+    <label for="psw">Password</label>
+    <input id="psw" type="password">
+    </div>
+
+   
+   <div class="div">
+<button id='find' >Find</button>
+   </div>
+</div>
+`;
+document.getElementById('find').addEventListener('click', find);
+}
+    function find() {
+      get(ref(db, 'users/'+uname.value)).then((snapshot) => {
+ if(snapshot.exists()){
+    if(psw.value==snapshot.val().Password){
+        document.getElementById('box').innerHTML=`
+        <div>
+           <label for="fname">First Name</label>
+           <input type='text' id="fname" value=${snapshot.val().FirstName} >
+           </div>
+     
+           <div>
+           <label for="lname">Last Name</label>
+           <input type='text' id="lname" value=${snapshot.val().LastName} >
+           </div>
+   
+           <div>
+           <label for="uname">User Name</label>
+           <input type='text' id="uname" value=${snapshot.val().UserName} >
+           </div>  
+           <div>
+           <label for="psw">Password</label>
+                      <input type='text' id="psw" value=${snapshot.val().Password} >
+           </div>  
+     
+           <div>
+           <label for="age">Age</label>
+                 <input type='number' id="age" value=${snapshot.val().Age} >
+           </div>
+   
+           <div>
+           <label for="email">Email</label>
+           <input type='email' id="email" value=${snapshot.val().Email} >
+           </div>
+   
+          <div class="div" id='div'>
+   <button id='edit'>Edit</button>
+          </div>
+       </div>
+       `;
+document.getElementById('edit').addEventListener('click', edit);
+
+       for(var i=0;i<document.getElementsByTagName('input').length;i++)
+      { document.getElementsByTagName('input')[i].readOnly=true;}
+    }
+  else{
+    psw.value='';
+    psw.style.backgroundColor='red';
+    alert('wrong Password');
+    return 0;
+  }
+ }
+ else{
+    alert("No User Found !");
+    return 0;
+ }
+      }).catch((error) => {
+        console.error('Error writing data:', error);
+      });
+    }
+function edit(){
+    for(var i=0;i<document.getElementsByTagName('input').length;i++)
+        {document.getElementsByTagName('input')[i].readOnly=false;}
+    document.getElementById('div').innerHTML+=`<button id='regi' >Save</button>`;
+    document.getElementById('regi').addEventListener('click', regis);
+
+     }
+
+function checkmail(){
+  for(var i=0;i<no;i++){
+  get(ref(db, 'Emails/'+i)).then((snapshot) => {
+    if(snapshot.exists){
+      alert("Email Already Exists. Please login");
+findpg();
+    }
+  }).catch((error) => {
+    console.error('Error Finding email data:', error);
+  });
+  }
+}
+    
+    document.getElementById('p_rg').addEventListener('click', registerpg);
+  document.getElementById('p_rm').addEventListener('click', removepg);
+document.getElementById('p_fn').addEventListener('click', findpg);
+
